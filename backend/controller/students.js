@@ -36,7 +36,7 @@ const issueCreated = async (req, res) => {
   res.json(myData);
 };
 
-const issueUpvotedWindow = async (res,res) => {
+const issueUpvotedWindow = async (req,res) => {
     const userId = req.body.userId;
     const myData = await Issue.find(
         { systemPart: "ACTIVE", upvotes: userId },
