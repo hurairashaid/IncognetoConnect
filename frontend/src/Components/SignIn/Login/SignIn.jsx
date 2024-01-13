@@ -12,6 +12,11 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
+
 
 function Copyright(props) {
   return (
@@ -31,13 +36,32 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const [error , setError] = useState("");
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
+    const formData = {
+      name: data.get('email'),
       password: data.get('password'),
-    });
+    } 
+    try {
+      const dataResponse = await axios.post("http://localhost:2000/api/authentication/staff" , formData)
+      console.log(dataResponse.data.response.length)
+      if(dataResponse.data.response.length !== 0 ){
+        sessionStorage.setItem("name" , dataResponse.data.response[0].name)
+        sessionStorage.setItem("category" , dataResponse.data.response[0].category)
+        navigate("../Dashboard/Dashboard");
+      }else{
+        setError("Credential not matched");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    
+     
+    
   };
 
   return (
@@ -73,6 +97,9 @@ export default function SignInSide() {
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
+            </Typography>
+            <Typography component="h1" variant="h5">
+              { error }
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField

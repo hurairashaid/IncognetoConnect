@@ -20,6 +20,7 @@ import Typography from '@mui/material/Typography';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import ResolveIssue from '../ResolveIssue/ResolveIssue'
 import TopIssues from '../TopIssues/TopIssues'
+import { useEffect } from 'react';
 import ViceChancellor from '../ViceChancellor/ViceChancellor'
 import { Stack, ToggleButton } from '@mui/material';
 const drawerWidth = 240;
@@ -48,7 +49,7 @@ const routes = [
 function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+   
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -57,6 +58,19 @@ function Dashboard(props) {
     navigate(path)
   }
 
+  const checkAuthentication = () => {
+    const name = sessionStorage.getItem("name");
+    const category = sessionStorage.getItem("category");
+    if(name == null && category == null){
+      navigate("/");
+    }
+  }
+
+
+  useEffect(() => {
+    checkAuthentication();
+  }, []);
+  
   const drawer = (
     <div>
       <Toolbar />
