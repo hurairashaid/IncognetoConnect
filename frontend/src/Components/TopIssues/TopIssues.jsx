@@ -1,6 +1,12 @@
 import React from 'react'
 // import '../../App.css'
 import issues from "../../Issues.json";
+axios.get('http://localhost:2000/api/issue/topIssuesWindow')
+  .then((response) => {
+    console.log(response.data);
+   
+  });
+
 import { Box, Typography } from '@mui/material';
 const TopIssues = () => {
   return (
