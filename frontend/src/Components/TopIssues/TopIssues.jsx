@@ -6,7 +6,6 @@ import axios from 'axios';
 axios.get('http://localhost:2000/api/issue/topIssuesWindow')
   .then((response) => {
     console.log(response);
-   
   });
 
 import { Box, Typography } from '@mui/material';
