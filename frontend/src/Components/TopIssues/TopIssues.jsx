@@ -1,9 +1,11 @@
 import React from 'react'
 // import '../../App.css'
 import issues from "../../Issues.json";
+import axios from 'axios';
+
 axios.get('http://localhost:2000/api/issue/topIssuesWindow')
   .then((response) => {
-    console.log(response.data);
+    console.log(response);
    
   });
 

@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const connectDB = require("./database/connect");
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 
 
 //middleware or to set router
+app.use(cors())
 app.use("/api/issue" , issue_routes)
 app.use("/api/authentication" , authentication_routes)
 app.use("/api/officeVC" , officeVC_routes )
