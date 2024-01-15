@@ -1,7 +1,9 @@
 const Issue = require("../models/issues");
 
 const topIssues = async(req,res) => {
-    const myData = await Issue.find({ status: 'UNRESOLVED', forwardVC : false ,  systemPart : "ACTIVE"} , "_id title description upvotes category").exec();
+    let data = req.body;
+    console.log(data.category)
+    const myData = await Issue.find({ status: 'UNRESOLVED', forwardVC : false ,  systemPart : "ACTIVE" , category : data.category} , "_id title description upvotes category").exec();
     res.json(myData);
 }
 
@@ -16,7 +18,7 @@ const resolveIssue = async(req,res) => {
 }
 
 const issueResolve = async(req,res) => {
-    const id = req.body.id
+    const id = req.params.id
     const resolveDescription = req.body.description;
     const resolveby = req.body.resolveBy;
     const myData = await Issue.findOneAndUpdate({_id : id}, {resolveDescription : resolveDescription , resolveby: resolveby , status : "RESOLVED"});
@@ -24,6 +26,8 @@ const issueResolve = async(req,res) => {
 }
 
 const forwardVC = async(req,res) => {
+    const id = req.query.id;
+    console.log(id)
     const myData = await Issue.findOneAndUpdate({_id : id}, {forwardVC : true});
     res.json(myData)
 }
