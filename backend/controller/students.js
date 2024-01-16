@@ -45,4 +45,53 @@ const issueUpvotedWindow = async (req,res) => {
       res.json(myData);
 }
 
-module.exports = { topIssuesWindow, issueCreated , issueUpvote ,issueUnvote , issueUpvotedWindow};
+const issueUnactive = async (req, res) => {
+  const creatorid = req.body.creatorid;
+  const myData = await Issue.find(
+    { systemPart: "DEACTIVE", creator: creatorid },
+    "_id title description"
+  ).exec();
+  res.json(myData);
+};
+
+const issueBanned = async (req, res) => {
+  const creatorid = req.body.creatorid;
+  const myData = await Issue.find(
+    { systemPart: "BANNED", creator: creatorid },
+    "_id title description upvotes category forwardVC"
+  ).exec();
+  res.json(myData);
+};
+
+const createIssue = async (req, res) => {
+  try {
+    const creatorid = req.body.creatorid;
+    const title = req.body.title;
+    const description = req.body.description;
+    const category = req.body.category;
+    
+    const myData = new Issue({
+      title: title,
+      description: description,
+      category: category,
+      creator: creatorid
+    });
+
+    // Save the new issue to the database
+    const savedIssue = await myData.save();
+
+    res.status(201).json({
+      success: true,
+      issue: savedIssue
+    });
+  } catch (error) {
+    console.error("Error creating issue:", error);
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error"
+    });
+  }
+};
+
+
+module.exports = { topIssuesWindow, issueCreated , issueUpvote ,issueUnvote , issueUpvotedWindow , issueUnactive , issueBanned , createIssue};

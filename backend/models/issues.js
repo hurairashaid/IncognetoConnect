@@ -16,6 +16,7 @@ const issueSchema = mongoose.Schema(
         },
         upvotes: {
             type: Array,
+            default:[]
         },
         status: {
             type: String,
