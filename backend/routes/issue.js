@@ -5,8 +5,8 @@ const {issueResolve,forwardVC , topIssues , forwardToVC , resolveIssue} = requir
 
 
 router.route("/topIssuesWindow").post(topIssues);
-router.route("/forwardToVCWindow").get(forwardToVC);
-router.route("/resolveIssueWindow").get(resolveIssue);
+router.route("/forwardToVCWindow").post(forwardToVC);
+router.route("/resolveIssueWindow").post(resolveIssue);
 router.route("/issueResolve").post(issueResolve);
 router.route("/forwardVC/").get(forwardVC);
 

@@ -1,12 +1,25 @@
 import React from "react";
 // import '../../App.css'
 import issues from "../../Issues.json";
-import axios from "axios";
+import axios from "axios"
 import { useState, useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import ResolveIssueModal from "./ResolveIssueModel";
+
 const TopIssues = () => {
   const categoryRequired = sessionStorage.getItem("category");
   const [issues, setIssues] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [resolveIssueValues , setResolveIssueValues] = useState([])
+  const handleOpen = (id , title , description ) => {
+    setOpen(true)
+    setResolveIssueValues([
+      id,title,description
+    ])
+  };
+
+
+  const handleClose = () => setOpen(false);
 
   const getData = async () => {
     axios
@@ -19,13 +32,9 @@ const TopIssues = () => {
   };
 
   const forwardVC = (_id) => {
-    axios.get(`http://localhost:2000/api/issue/forwardVC?id=${_id}`)
+    axios.get(`http://localhost:2000/api/issue/forwardVC?id=${_id}`);
   };
-  
-  const resolveIssue = (_id) => {
-    axios.get(`http://localhost:2000/api/issue/forwardVC?id=${_id}`)
-  };
-  
+
 
   useEffect(() => {
     getData();
@@ -33,6 +42,7 @@ const TopIssues = () => {
   return (
     <>
       <Box>
+        {open && <ResolveIssueModal data = {resolveIssueValues} handleClose = {handleClose}/>}
         <h1 className="text-2xl font-mono">TOP 10 ISSUES</h1>
         {issues?.map((e, i) => {
           return (
@@ -61,8 +71,15 @@ const TopIssues = () => {
                 <Typography>
                   <strong>Category:</strong> {e?.category}
                 </Typography>
-                <Button variant="contained" onClick={() => forwardVC(e?._id)}>Forward to VC</Button>
-                <Button variant="contained" onClick={() => resolveIssue(e?._id)}>Resolve Issue</Button>
+                <Button variant="contained" onClick={() => forwardVC(e?._id)}>
+                  Forward to VC
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => handleOpen(e?._id , e?.title , e?.description)}
+                >
+                  Resolve Issue
+                </Button>
               </Box>
             </Box>
           );

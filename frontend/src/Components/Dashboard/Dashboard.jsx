@@ -57,7 +57,8 @@ function Dashboard(props) {
   const navigateHandler = (path) => {
     navigate(path)
   }
-
+  const name = sessionStorage.getItem("name");
+  const category = sessionStorage.getItem("category");
   const checkAuthentication = () => {
     const name = sessionStorage.getItem("name");
     const category = sessionStorage.getItem("category");
@@ -142,8 +143,8 @@ function Dashboard(props) {
           }}
         >
           <Box sx={{ marginTop: "50px", textAlign: 'center' }}>
-            <h1>NAME GOES HERE</h1>
-            <h1>DESIGNATION GOES HERE</h1>
+            <h1>{name}</h1>
+            <h1>{category}</h1>
           </Box>
           {drawer}
         </Drawer>
@@ -156,8 +157,8 @@ function Dashboard(props) {
           open
         >
           <Box sx={{ marginTop: "50px", textAlign: 'center' }}>
-            <h1>NAME GOES HERE</h1>
-            <h1>DESIGNATION GOES HERE</h1>
+          <h1>{name}</h1>
+          <h1>{category}</h1>
           </Box>
           {drawer}
         </Drawer>

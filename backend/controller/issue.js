@@ -8,17 +8,19 @@ const topIssues = async(req,res) => {
 }
 
 const forwardToVC = async(req,res) => {
-    const myData = await Issue.find({ status: 'UNRESOLVED', forwardVC : true ,  systemPart : "ACTIVE"} , "_id title description upvotes category").exec();
+    let data = req.body;
+    const myData = await Issue.find({ status: 'UNRESOLVED', forwardVC : true ,  systemPart : "ACTIVE" , category : data.category} , "_id title description upvotes category").exec();
     res.json(myData);
 }
 
 const resolveIssue = async(req,res) => {
-    const myData = await Issue.find({ status: 'RESOLVED', systemPart : "ACTIVE"} , "_id title description upvotes category").exec();
+    let data = req.body;
+    const myData = await Issue.find({ status: 'RESOLVED', systemPart : "ACTIVE" , category : data.category} , "_id title description upvotes category resolveby resolveDescription").exec();
     res.json(myData);
 }
 
 const issueResolve = async(req,res) => {
-    const id = req.params.id
+    const id = req.body.id
     const resolveDescription = req.body.description;
     const resolveby = req.body.resolveBy;
     const myData = await Issue.findOneAndUpdate({_id : id}, {resolveDescription : resolveDescription , resolveby: resolveby , status : "RESOLVED"});
