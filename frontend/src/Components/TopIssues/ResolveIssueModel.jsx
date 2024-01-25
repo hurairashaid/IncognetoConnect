@@ -39,7 +39,8 @@ const ResolveIssueModal = ({ handleClose , data }) => {
         "http://localhost:2000/api/issue/issueResolve",
         formData
       );
-      if(dataResponse.data.response.length !== 0 ){
+      if(dataResponse.status === 200 ){
+        console.log("a")
         handleClose();
       }
     } catch (error) {

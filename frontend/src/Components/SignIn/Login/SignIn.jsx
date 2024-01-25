@@ -52,7 +52,7 @@ export default function SignInSide() {
       if(dataResponse.data.response.length !== 0 ){
         sessionStorage.setItem("name" , dataResponse.data.response[0].name)
         sessionStorage.setItem("category" , dataResponse.data.response[0].category)
-        navigate("../Dashboard/Dashboard");
+        navigate("../Dashboard");
       }else{
         setError("Credential not matched");
       }

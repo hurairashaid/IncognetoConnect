@@ -1,7 +1,7 @@
 import React from "react";
 // import '../../App.css'
 import issues from "../../Issues.json";
-import axios from "axios"
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import ResolveIssueModal from "./ResolveIssueModel";
@@ -10,24 +10,23 @@ const TopIssues = () => {
   const categoryRequired = sessionStorage.getItem("category");
   const [issues, setIssues] = useState([]);
   const [open, setOpen] = useState(false);
-  const [resolveIssueValues , setResolveIssueValues] = useState([])
-  const handleOpen = (id , title , description ) => {
-    setOpen(true)
-    setResolveIssueValues([
-      id,title,description
-    ])
+  const [resolveIssueValues, setResolveIssueValues] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const handleOpen = (id, title, description) => {
+    setOpen(true);
+    setResolveIssueValues([id, title, description]);
   };
-
-
   const handleClose = () => setOpen(false);
-
+  
   const getData = async () => {
+    console.log("a")
     axios
-      .post("http://localhost:2000/api/issue/topIssuesWindow", {
-        category: categoryRequired,
-      })
-      .then((response) => {
-        setIssues(response.data);
+    .post("http://localhost:2000/api/issue/topIssuesWindow", {
+      category: categoryRequired,
+    })
+    .then((response) => {
+      setIssues(response.data);
+      setRefresh(true)
       });
   };
 
@@ -35,14 +34,18 @@ const TopIssues = () => {
     axios.get(`http://localhost:2000/api/issue/forwardVC?id=${_id}`);
   };
 
-
   useEffect(() => {
     getData();
-  }, [issues]);
+  }, [refresh]);
   return (
     <>
       <Box>
-        {open && <ResolveIssueModal data = {resolveIssueValues} handleClose = {handleClose}/>}
+        {open && (
+          <ResolveIssueModal
+            data={resolveIssueValues}
+            handleClose={handleClose}
+          />
+        )}
         <h1 className="text-2xl font-mono">TOP 10 ISSUES</h1>
         {issues?.map((e, i) => {
           return (
@@ -76,7 +79,7 @@ const TopIssues = () => {
                 </Button>
                 <Button
                   variant="contained"
-                  onClick={() => handleOpen(e?._id , e?.title , e?.description)}
+                  onClick={() => handleOpen(e?._id, e?.title, e?.description)}
                 >
                   Resolve Issue
                 </Button>

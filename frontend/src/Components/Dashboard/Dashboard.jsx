@@ -23,27 +23,56 @@ import TopIssues from '../TopIssues/TopIssues'
 import { useEffect } from 'react';
 import ViceChancellor from '../ViceChancellor/ViceChancellor'
 import { Stack, ToggleButton } from '@mui/material';
+import VCBannedIssues from '../VCBannedIssues/VCBannedIssues';
+import VCForwardedIssue from '../VCForwardedIssue/VCForwardedIssue';
+import VCTopIssues from '../VCTopIssues/VCTopIssues';
+
 const drawerWidth = 240;
+const category = sessionStorage.getItem("category");
+let routes;
+console.log(category === "Vice Chancellor")
+if (category === "Vice Chancellor") {
+  routes = [
+    {
+  
+      name: "Forwarded To VC",
+      path: "VCForwardedIssue",
+      element: <VCForwardedIssue />
+    },
+    {
+      name: "Banned Issues",
+      path: "VCBannedIssues",
+      element: <VCBannedIssues />
+
+    },
+    {
+      name: "Top Issues",
+      path: "VCTopIssues",
+      element: <VCTopIssues />
+    },
+  ]
+} else {
+  routes = [
+    {
+  
+      name: "Top Issues",
+      path: "TopIssues",
+      element: <TopIssues />
+    },
+    {
+      name: "Resolve Issue",
+      path: "ResolveIssue",
+      element: <ResolveIssue />
+    },
+    {
+      name: "Vice Chancellor",
+      path: "ViceChancellor",
+      element: <ViceChancellor />
+    },
+  ]
+}
 
 
-const routes = [
-  {
-
-    name: "Top Issues",
-    path: "TopIssues",
-    element: <TopIssues />
-  },
-  {
-    name: "Resolve Issue",
-    path: "ResolveIssue",
-    element: <ResolveIssue />
-  },
-  {
-    name: "Vice Chancellor",
-    path: "ViceChancellor",
-    element: <ViceChancellor />
-  },
-]
 
 
 function Dashboard(props) {
@@ -173,6 +202,9 @@ function Dashboard(props) {
           <Route path='/ResolveIssue' element={<ResolveIssue />} />
           <Route path='/TopIssues' element={<TopIssues />} />
           <Route path='/ViceChancellor' element={<ViceChancellor />} />
+          <Route path='/VCForwardedIssue' element={<VCForwardedIssue />} />
+          <Route path='/ResolveIssue' element={<ResolveIssue />} />
+          <Route path='/VCTopIssues' element={<VCTopIssues />} />
         </Routes>
       </Box>
     </Box>
