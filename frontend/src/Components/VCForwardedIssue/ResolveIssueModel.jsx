@@ -11,13 +11,14 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import '../VCForwardedIssue/modal.css'
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 900,
+  width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -67,7 +68,7 @@ const ResolveIssueModal = ({ handleClose , data }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box id="mediaQuery" sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {data[1]}
           </Typography>
@@ -98,7 +99,7 @@ const ResolveIssueModal = ({ handleClose , data }) => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 5, mb: 2 }}
             >
               Resolve Issue
             </Button>
