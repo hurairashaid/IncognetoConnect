@@ -205,6 +205,7 @@ function Dashboard(props) {
           <Route path='/VCForwardedIssue' element={<VCForwardedIssue />} />
           <Route path='/ResolveIssue' element={<ResolveIssue />} />
           <Route path='/VCTopIssues' element={<VCTopIssues />} />
+          <Route path='/VCBannedIssues' element={<VCBannedIssues />} />
         </Routes>
       </Box>
     </Box>
