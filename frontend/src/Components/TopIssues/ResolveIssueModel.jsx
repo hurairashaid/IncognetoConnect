@@ -16,6 +16,7 @@ const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
+  display:"flex",
   transform: "translate(-50%, -50%)",
   width: 900,
   bgcolor: "background.paper",
@@ -24,7 +25,7 @@ const style = {
   p: 4,
 };
 
-const ResolveIssueModal = ({ handleClose , data }) => {
+const ResolveIssueModal = ({ handleClose, data }) => {
   const handleSubmit = async (event) => {
     const resolveby = sessionStorage.getItem("name");
     event.preventDefault();
@@ -39,7 +40,7 @@ const ResolveIssueModal = ({ handleClose , data }) => {
         "http://localhost:2000/api/issue/issueResolve",
         formData
       );
-      if(dataResponse.status === 200 ){
+      if (dataResponse.status === 200) {
         console.log("a")
         handleClose();
       }
@@ -58,7 +59,7 @@ const ResolveIssueModal = ({ handleClose , data }) => {
       });
   };
 
-  
+
   return (
     <>
       <Modal
@@ -68,7 +69,7 @@ const ResolveIssueModal = ({ handleClose , data }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography  id="modal-modal-title" variant="h6" component="h2">
             {data[1]}
           </Typography>
           <Typography id="modal-modal-description">{data[2]}</Typography>

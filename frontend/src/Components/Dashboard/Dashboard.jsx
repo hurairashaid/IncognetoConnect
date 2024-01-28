@@ -30,7 +30,7 @@ console.log(category === "Vice Chancellor")
 if (category === "Vice Chancellor") {
   routes = [
     {
-  
+
       name: "Forwarded To VC",
       path: "VCForwardedIssue",
       element: <VCForwardedIssue />
@@ -50,7 +50,7 @@ if (category === "Vice Chancellor") {
 } else {
   routes = [
     {
-  
+
       name: "Top Issues",
       path: "TopIssues",
       element: <TopIssues />
@@ -74,7 +74,7 @@ if (category === "Vice Chancellor") {
 function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-   
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -87,7 +87,7 @@ function Dashboard(props) {
   const checkAuthentication = () => {
     const name = sessionStorage.getItem("name");
     const category = sessionStorage.getItem("category");
-    if(name == null && category == null){
+    if (name == null && category == null) {
       navigate("/");
     }
   }
@@ -96,18 +96,15 @@ function Dashboard(props) {
   useEffect(() => {
     checkAuthentication();
   }, []);
-  
+
   const drawer = (
-    <div>
+    <div >
       <Toolbar />
       <Divider />
-      <Stack>
+      <Stack >
         {routes.map((routes, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton onClick={() => navigateHandler(routes.path)}>
-              {/* <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon> */}
               <Link type='button' to={"#"} className='focus'>
                 <ListItemText sx={{ border: "1px solid #d3d3d3", borderRadius: '10px', p: 2, textAlign: 'center' }} primary={routes.name} />
               </Link>
@@ -116,13 +113,11 @@ function Dashboard(props) {
         ))}
       </Stack>
       <Divider />
-
     </div>
   );
 
   // Remove this const when copying and pasting into your project.
   const container = window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -130,7 +125,7 @@ function Dashboard(props) {
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px`,backgroundColor:"red" },
+          ml: { sm: `${drawerWidth}px`, backgroundColor: "red" },
         }}
       >
         <Toolbar>
@@ -182,8 +177,8 @@ function Dashboard(props) {
           open
         >
           <Box sx={{ marginTop: "50px", textAlign: 'center' }}>
-          <h1>{name}</h1>
-          <h1>{category}</h1>
+            <h1>{name}</h1>
+            <h1>{category}</h1>
           </Box>
           {drawer}
         </Drawer>
