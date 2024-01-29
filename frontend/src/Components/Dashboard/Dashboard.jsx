@@ -69,8 +69,6 @@ if (category === "Vice Chancellor") {
 }
 
 
-
-
 function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
