@@ -2,7 +2,7 @@ const Issue = require("../models/issues");
 
 const topIssuesWindow = async (req, res) => {
   const myData = await Issue.find(
-    { systemPart: "ACTIVE" },
+    { systemPart: "ACTIVE" , status : "UNRESOLVED"},
     "_id title description upvotes category forwardVC"
   ).exec();
   res.json(myData);
@@ -29,9 +29,10 @@ const issueUnvote = async(req,res) => {
 
 const issueCreated = async (req, res) => {
   const creatorid = req.query.creatorid;
+  console.log(creatorid)
   const myData = await Issue.find(
     { systemPart: "ACTIVE", creator: creatorid },
-    "_id title description upvotes category forwardVC"
+    "_id title description upvotes category forwardVC status resolveby resolveDescription"
   ).exec();
   res.json(myData);
 };
@@ -46,16 +47,16 @@ const issueUpvotedWindow = async (req,res) => {
 }
 
 const issueUnactive = async (req, res) => {
-  const creatorid = req.body.creatorid;
+  const creatorid = req.query.creatorid;
   const myData = await Issue.find(
     { systemPart: "DEACTIVE", creator: creatorid },
-    "_id title description"
+    "_id title description category"
   ).exec();
   res.json(myData);
 };
 
 const issueBanned = async (req, res) => {
-  const creatorid = req.body.creatorid;
+  const creatorid = req.query.creatorid;
   const myData = await Issue.find(
     { systemPart: "BANNED", creator: creatorid },
     "_id title description upvotes category forwardVC"

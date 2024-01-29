@@ -1,5 +1,5 @@
 const officeHolder = require("../models/officeHolder");
-const studentUser = require("../models/studentUser");
+const studentUser = require("../models/student");
 
 const staffAuthentication = async (req, res) => {
   let data = req.body;
@@ -49,4 +49,17 @@ const createStudent = async (req, res) => {
 //     });
 //   }}
 }
-module.exports = { staffAuthentication, createStudent };
+
+const studentAuthentication = async (req, res) => {
+  let data = req.body;
+  console.log(data)
+  const myData = await studentUser
+    .find(
+      { duetId: data.duetid, Password: data.password },
+      "name department status duetId"
+    )
+    .exec();
+  res.json({ response: myData });
+};
+
+module.exports = { staffAuthentication, createStudent , studentAuthentication};

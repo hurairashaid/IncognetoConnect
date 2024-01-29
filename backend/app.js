@@ -32,7 +32,6 @@ const start = async () => {
     try {
         await connectDB();
         app.listen(2000, console.log(`server is running at http://localhost:${PORT}`))
-
     } catch (error) {
         console.log(error)
     }

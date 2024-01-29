@@ -7,21 +7,44 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+    const formData = {
+      duetid: data.get("duetid"),
       password: data.get("password"),
-    });
+    };
+    try {
+      const dataResponse = await axios.post(
+        "http://localhost:2000/api/authentication/studentSignIn",
+        formData
+      );
+      console.log(dataResponse.data.response.length);
+      if (dataResponse.data.response.length !== 0) {
+        sessionStorage.setItem("name" , dataResponse.data.response[0].name)
+        sessionStorage.setItem("department" , dataResponse.data.response[0].department)
+        sessionStorage.setItem("status" , dataResponse.data.response[0].status)
+        sessionStorage.setItem("duetId" , dataResponse.data.response[0].duetId)
+        navigate("../StudentDashboard");
+      } else {
+        setError("Credential not matched");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <Container component="main" maxWidth="xs">
       <Box
-        sx={{  
+        sx={{
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
@@ -31,14 +54,17 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        <Typography component="h1" variant="h5">
+          {error}
+        </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="duetid"
             label="Email Address"
-            name="email"
+            name="duetid"
             autoComplete="email"
             autoFocus
           />

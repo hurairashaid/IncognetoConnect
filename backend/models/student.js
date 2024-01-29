@@ -27,18 +27,23 @@ const studentUserSchema = mongoose.Schema(
             default: "null",
             required: true
         },
-        status : {
-            type : String,
-            default: "DEACTIVE",
-            required : true ,
+        issueCreated: {
+            type: Array
         },
-        bannedReason :{
-          type : String,
-          default : "null",
-          required :true
-        }
+        issueUpvoted: {
+            type: Array
+        },
+        status: {
+            type: String,
+            enum: ["ACTIVE", "DEACTIVE", "BANNED"],
+            default: "ACTIVE"
+        },
+        bannedReason: {
+            type: String,
+            required: true
+        },
     },
-    { timestamp: true }
+    { timestamps: true }
 )
 
 

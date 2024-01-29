@@ -7,70 +7,40 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import ResolveIssue from '../ResolveIssue/ResolveIssue'
-import TopIssues from '../TopIssues/TopIssues'
 import { useEffect } from 'react';
-import ViceChancellor from '../ViceChancellor/ViceChancellor'
 import { Stack, ToggleButton } from '@mui/material';
-import VCBannedIssues from '../VCBannedIssues/VCBannedIssues';
-import VCForwardedIssue from '../VCForwardedIssue/VCForwardedIssue';
-import VCTopIssues from '../VCTopIssues/VCTopIssues';
+import IssueUpvote from '../IssueUpvote/IssueUpvote';
+import TopIssues from '../TopIssues/TopIssues';
+import IssueCreated from '../IssueCreated/issueCreated';
 
 const drawerWidth = 240;
-const category = sessionStorage.getItem("category");
-let routes;
-console.log(category === "Vice Chancellor")
-if (category === "Vice Chancellor") {
-  routes = [
+ const routes = [
     {
-  
-      name: "Forwarded To VC",
-      path: "VCForwardedIssue",
-      element: <VCForwardedIssue />
+
+      name: "Issue Created",
+      path: "Student/IssueCreated",
+      element: <IssueCreated />
     },
     {
-      name: "Banned Issues",
-      path: "VCBannedIssues",
-      element: <VCBannedIssues />
+      name: "Issue Upvoted",
+      path: "Student/IssueUpvoted",
+      element: <IssueUpvote />
 
     },
     {
-      name: "Top Issues",
-      path: "VCTopIssues",
-      element: <VCTopIssues />
-    },
-  ]
-} else {
-  routes = [
-    {
-  
-      name: "Top Issues",
-      path: "TopIssues",
+      name: "Student Top Issues",
+      path: "Student/TopIssues",
       element: <TopIssues />
     },
-    {
-      name: "Resolve Issue",
-      path: "ResolveIssue",
-      element: <ResolveIssue />
-    },
-    {
-      name: "Vice Chancellor",
-      path: "ViceChancellor",
-      element: <ViceChancellor />
-    },
   ]
-}
+
 
 
 
@@ -78,7 +48,7 @@ if (category === "Vice Chancellor") {
 function StudentDashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-   
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -91,7 +61,7 @@ function StudentDashboard(props) {
   const checkAuthentication = () => {
     const name = sessionStorage.getItem("name");
     const category = sessionStorage.getItem("category");
-    if(name == null && category == null){
+    if (name == null && category == null) {
       navigate("/");
     }
   }
@@ -100,18 +70,15 @@ function StudentDashboard(props) {
   useEffect(() => {
     checkAuthentication();
   }, []);
-  
+
   const drawer = (
-    <div>
+    <div >
       <Toolbar />
       <Divider />
-      <Stack>
+      <Stack >
         {routes.map((routes, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton onClick={() => navigateHandler(routes.path)}>
-              {/* <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon> */}
               <Link type='button' to={"#"} className='focus'>
                 <ListItemText sx={{ border: "1px solid #d3d3d3", borderRadius: '10px', p: 2, textAlign: 'center' }} primary={routes.name} />
               </Link>
@@ -120,13 +87,11 @@ function StudentDashboard(props) {
         ))}
       </Stack>
       <Divider />
-
     </div>
   );
 
   // Remove this const when copying and pasting into your project.
   const container = window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -134,7 +99,7 @@ function StudentDashboard(props) {
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px`,backgroundColor:"red" },
+          ml: { sm: `${drawerWidth}px`, backgroundColor: "red" },
         }}
       >
         <Toolbar>
@@ -148,7 +113,7 @@ function StudentDashboard(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h5" noWrap component="div">
-            Dashboard
+            Student Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -186,8 +151,8 @@ function StudentDashboard(props) {
           open
         >
           <Box sx={{ marginTop: "50px", textAlign: 'center' }}>
-          <h1>{name}</h1>
-          <h1>{category}</h1>
+            <h1>{name}</h1>
+            <h1>{category}</h1>
           </Box>
           {drawer}
         </Drawer>
@@ -199,20 +164,16 @@ function StudentDashboard(props) {
       >
         <Toolbar />
         <Routes>
-          <Route path='/ResolveIssue' element={<ResolveIssue />} />
-          <Route path='/TopIssues' element={<TopIssues />} />
-          <Route path='/ViceChancellor' element={<ViceChancellor />} />
-          <Route path='/VCForwardedIssue' element={<VCForwardedIssue />} />
-          <Route path='/ResolveIssue' element={<ResolveIssue />} />
-          <Route path='/VCTopIssues' element={<VCTopIssues />} />
-          <Route path='/VCBannedIssues' element={<VCBannedIssues />} />
+          <Route path='/Student/IssueCreated' element={<IssueCreated />} />
+          <Route path='/Student/IssueUpvoted' element={<IssueUpvote />} />
+          <Route path='/Student/TopIssues' element={<TopIssues />} />
         </Routes>
       </Box>
     </Box>
   );
 }
 
-Dashboard.propTypes = {
+StudentDashboard.propTypes = {
   window: PropTypes.func,
 };
 
