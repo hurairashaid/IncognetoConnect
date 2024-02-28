@@ -41,7 +41,7 @@ const issueUpvotedWindow = async (req,res) => {
     const userId = req.body.userId;
     const myData = await Issue.find(
         { systemPart: "ACTIVE", upvotes: userId },
-        "_id title description upvotes category forwardVC"
+        "_id title description upvotes category forwardVC status resolvedBy resolveby resolveDescription"
       ).exec();
       res.json(myData);
 }
@@ -50,7 +50,7 @@ const issueUnactive = async (req, res) => {
   const creatorid = req.query.creatorid;
   const myData = await Issue.find(
     { systemPart: "DEACTIVE", creator: creatorid },
-    "_id title description category"
+    "_id title description category upvotes"
   ).exec();
   res.json(myData);
 };
@@ -94,5 +94,12 @@ const createIssue = async (req, res) => {
   }
 };
 
+const resolvedIssue = async (req, res) => {
+  const myData = await Issue.find(
+    { systemPart: "ACTIVE", status: "RESOLVED" },
+    "_id title description upvotes category resolveby resolveDescription"
+  ).sort({ "upvotes.length": -1 }).exec();
+  res.json(myData);
+};
 
-module.exports = { topIssuesWindow, issueCreated , issueUpvote ,issueUnvote , issueUpvotedWindow , issueUnactive , issueBanned , createIssue};
+module.exports = { topIssuesWindow, issueCreated , issueUpvote ,issueUnvote , issueUpvotedWindow , issueUnactive , issueBanned , createIssue ,resolvedIssue};

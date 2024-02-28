@@ -10,10 +10,10 @@ import Container from "@mui/material/Container";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 export default function SignIn() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -23,7 +23,7 @@ export default function SignIn() {
     };
     try {
       const dataResponse = await axios.post(
-        "http://localhost:2000/api/authentication/studentSignIn",
+        `http://${import.meta.env.VITE_REACT_APP_URL}:2000/api/authentication/studentSignIn`,
         formData
       );
       console.log(dataResponse.data.response.length);
@@ -32,7 +32,13 @@ export default function SignIn() {
         sessionStorage.setItem("department" , dataResponse.data.response[0].department)
         sessionStorage.setItem("status" , dataResponse.data.response[0].status)
         sessionStorage.setItem("duetId" , dataResponse.data.response[0].duetId)
+        sessionStorage.setItem("role" , dataResponse.data.response[0].Role)
+        if(dataResponse.data.response[0].Role === "Student"){
         navigate("../StudentDashboard");
+        }else{
+          console.log(dataResponse.data.response[0].Role)
+          navigate("../ControllerDashboard");
+        }
       } else {
         setError("Credential not matched");
       }

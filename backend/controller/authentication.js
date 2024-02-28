@@ -56,7 +56,7 @@ const studentAuthentication = async (req, res) => {
   const myData = await studentUser
     .find(
       { duetId: data.duetid, Password: data.password },
-      "name department status duetId"
+      "name department status duetId Role"
     )
     .exec();
   res.json({ response: myData });

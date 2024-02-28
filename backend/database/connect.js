@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-url="mongodb+srv://daniyalghani159:uFa7R6eI657uOaDi@cluster0.tokelxu.mongodb.net/Anonymous?retryWrites=true&w=majority"
+url="mongodb://localhost:27017"
 const connectDB = () => {
     console.log("we are in database")
     return mongoose.connect(url, {

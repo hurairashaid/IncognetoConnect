@@ -9,7 +9,7 @@ const ResolveIssue = () => {
   console.log(issues)
   const getData = async () => {
     axios
-      .post("http://localhost:2000/api/issue/resolveIssueWindow", {
+      .post("http://localhost:2000/api/issue/resolvedIssue", {
         category: categoryRequired,
       })
       .then((response) => {

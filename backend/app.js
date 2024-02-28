@@ -14,7 +14,7 @@ const issue_routes = require("./routes/issue")
 const authentication_routes = require("./routes/authentication")
 const officeVC_routes = require("./routes/officeVc")
 const students_routes = require("./routes/students")
-
+const controller_routers = require("./routes/controller.js")
 app.get("/", (req, res) => {
     res.send("Welcome to anonymous app");
 })
@@ -26,6 +26,7 @@ app.use("/api/issue" , issue_routes)
 app.use("/api/authentication" , authentication_routes)
 app.use("/api/officeVC" , officeVC_routes )
 app.use("/api/students" ,students_routes )
+app.use("/api/controller" ,controller_routers )
 
 
 const start = async () => {
